@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Góc trọ SP – Nhà trọ &amp; đồ dùng cho sinh viên Sư phạm</title>
+<style>
+:root{--bg:#f6f8f5;--card:#fff;--tx:#1d2a22;--mut:#5d6b62;--pri:#1f7a4d;--priTx:#fff;--soft:#e3f1e8;--bd:#d8e2da;--warn:#c2410c;--warnBg:#ffedd5;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#111a15;--card:#18241d;--tx:#e8f0ea;--mut:#9db0a3;--pri:#4cc38a;--priTx:#08170f;--soft:#1f3328;--bd:#2b3d32;--warn:#fdba74;--warnBg:#3a2412;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#111a15;--card:#18241d;--tx:#e8f0ea;--mut:#9db0a3;--pri:#4cc38a;--priTx:#08170f;--soft:#1f3328;--bd:#2b3d32;--warn:#fdba74;--warnBg:#3a2412;color-scheme:dark}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:1000px;margin:0 auto;padding:0 16px}
+header{background:var(--pri);color:var(--priTx);padding:28px 0 22px}
+header h1{margin:0 0 6px;font-size:1.7rem}header p{margin:0;opacity:.92}
+.badge{display:inline-block;background:rgba(255,255,255,.2);padding:2px 10px;border-radius:99px;font-size:.8rem;margin-bottom:8px}
+nav{display:flex;gap:8px;margin:18px 0 12px;flex-wrap:wrap}
+nav button,.btn{border:1px solid var(--bd);background:var(--card);color:var(--tx);padding:9px 16px;border-radius:99px;font:inherit;cursor:pointer}
+nav button.on,.btn.pri{background:var(--pri);color:var(--priTx);border-color:var(--pri);font-weight:600}
+.filters{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:8px;margin-bottom:14px}
+input,select,textarea{width:100%;padding:10px 12px;border:1px solid var(--bd);border-radius:10px;background:var(--card);color:var(--tx);font:inherit}
+label{display:block;font-size:.88rem;color:var(--mut);margin:10px 0 4px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0;font-size:1.05rem}
+.price{font-weight:700;color:var(--pri);font-size:1.1rem}
+.free{background:var(--soft);color:var(--pri);padding:2px 10px;border-radius:99px;font-weight:700;font-size:.9rem;align-self:flex-start}
+.meta{color:var(--mut);font-size:.9rem}
+.tags{display:flex;gap:6px;flex-wrap:wrap}.tag{background:var(--soft);color:var(--pri);padding:1px 9px;border-radius:99px;font-size:.78rem}
+.card .row{margin-top:auto;display:flex;gap:8px;flex-wrap:wrap;padding-top:8px}
+.card a.btn{text-decoration:none;font-size:.92rem;padding:7px 14px}
+.sample{font-size:.75rem;color:var(--mut)}
+.empty{text-align:center;color:var(--mut);padding:36px 0}
+.panel{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:18px;max-width:640px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.note{background:var(--warnBg);color:var(--warn);padding:10px 14px;border-radius:10px;font-size:.88rem;margin:14px 0}
+.tips li{margin-bottom:6px}
+footer{margin:36px 0 24px;color:var(--mut);font-size:.85rem;text-align:center}
+.hide{display:none}
+@media(max-width:700px){.filters{grid-template-columns:1fr 1fr}.filters input{grid-column:1/-1}.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<span class="badge">Miễn phí · Dành cho sinh viên Sư phạm</span>
+<h1>🏫 Góc trọ SP</h1>
+<p>Tìm nhà trọ, ở ghép và trao đổi, tặng, nhượng lại đồ dùng cho sinh viên Đại học Sư phạm.</p>
+</div></header>
+
+<main class="wrap">
+<nav id="tabs">
+<button data-t="room" class="on">🏠 Nhà trọ</button>
+<button data-t="item">🛋️ Đồ gia dụng &amp; sách</button>
+<button data-t="post">➕ Đăng tin</button>
+<button data-t="tips">💡 Kinh nghiệm</button>
+</nav>
+
+<section id="browse">
+<div class="filters">
+<input id="q" type="search" placeholder="Tìm theo tên, khu vực, từ khóa…">
+<select id="area"><option value="">Mọi khu vực</option></select>
+<select id="price"></select>
+<select id="sort">
+<option value="new">Mới nhất</option><option value="asc">Giá thấp → cao</option><option value="desc">Giá cao → thấp</option>
+</select>
+</div>
+<div id="list" class="grid"></div>
+<div id="empty" class="empty hide">Chưa có tin phù hợp. Hãy thử đổi bộ lọc hoặc đăng tin mới nhé!</div>
+</section>
+
+<section id="post" class="hide">
+<div class="panel">
+<h2 style="margin-top:0">Đăng tin miễn phí</h2>
+<label>Loại tin</label>
+<select id="f-type"><option value="room">Nhà trọ / ở ghép</option><option value="item">Đồ gia dụng / sách / đồ học tập</option></select>
+<label>Tiêu đề *</label><input id="f-title" maxlength="80" placeholder="VD: Phòng trọ 20m² gần cổng trường">
+<div class="two">
+<div><label>Giá (nghìn đồng, nhập 0 nếu tặng) *</label><input id="f-price" type="number" min="0" step="10" value="0"></div>
+<div><label>Khu vực *</label><input id="f-area" maxlength="40" placeholder="VD: Gần cổng chính"></div>
+</div>
+<label>Mô tả</label><textarea id="f-desc" rows="3" maxlength="300" placeholder="Diện tích, tiện nghi, tình trạng đồ, giờ giấc…"></textarea>
+<label>Số điện thoại / Zalo liên hệ *</label><input id="f-phone" inputmode="tel" maxlength="15" placeholder="09xxxxxxxx">
+<div class="note">⚠️ Tin đăng được lưu trên trình duyệt của bạn trong bản trình diễn này. Muốn mọi người cùng thấy, cần gắn thêm cơ sở dữ liệu. Đừng đăng thông tin nhạy cảm; luôn xem phòng trực tiếp và không chuyển tiền cọc khi chưa gặp chủ nhà.</div>
+<button class="btn pri" id="submit">Đăng tin</button>
+<span id="msg" class="meta" style="margin-left:10px"></span>
+</div>
+</section>
+
+<section id="tips" class="hide">
+<div class="panel">
+<h2 style="margin-top:0">Kinh nghiệm thuê trọ &amp; trao đổi đồ</h2>
+<ul class="tips">
+<li><b>Xem phòng trực tiếp</b> vào ban ngày: kiểm tra ánh sáng, độ ẩm, ổ điện, khóa cửa, nước.</li>
+<li><b>Hỏi rõ chi phí:</b> giá điện, nước, wifi, gửi xe, tiền cọc và thời hạn hợp đồng.</li>
+<li><b>Ở ghép:</b> trao đổi trước về giờ giấc, vệ sinh, khách đến chơi, chi phí chia đều.</li>
+<li><b>Gần trường &amp; điểm thực tập:</b> sinh viên sư phạm hay đi thực tập, nên cân nhắc đường đi.</li>
+<li><b>Đồ cũ:</b> thử máy, kiểm tra điện trước khi nhận; ưu tiên giao nhận tại nơi công cộng.</li>
+<li><b>Tặng đồ cuối khóa:</b> giáo trình, quạt, bàn học… đăng tặng để lớp sau dùng tiếp.</li>
+</ul>
+</div>
+</section>
+</main>
+
+<footer class="wrap">Góc trọ SP · Cộng đồng sinh viên Sư phạm giúp nhau · Các tin có nhãn “Mẫu” chỉ là dữ liệu minh họa</footer>
+
+<script>
+(function(){
+var SAMPLE=[
+{id:"s1",type:"room",title:"Phòng trọ 18m² có gác lửng",price:1800,area:"Gần cổng chính",desc:"Có điều hòa, vệ sinh khép kín, wifi miễn phí, khóa vân tay. Ưu tiên sinh viên nữ.",phone:"0900000001",tag:"Phòng riêng",t:6},
+{id:"s2",type:"room",title:"Tìm 1 bạn nữ ở ghép phòng 25m²",price:1200,area:"Khu ký túc xá cũ",desc:"Phòng 2 người, chia điện nước theo đầu người, bếp chung sạch sẽ.",phone:"0900000002",tag:"Ở ghép",t:5},
+{id:"s3",type:"room",title:"Phòng trọ giá rẻ cho sinh viên",price:1000,area:"Hẻm sau trường",desc:"Phòng 15m², có quạt, nước nóng, chỗ để xe rộng, giờ giấc tự do.",phone:"0900000003",tag:"Giá rẻ",t:4},
+{id:"s4",type:"room",title:"Căn hộ mini 25m² đầy đủ nội thất",price:2800,area:"Đường lớn gần trường",desc:"Có bếp, tủ lạnh, máy giặt chung, an ninh camera 24/7.",phone:"0900000004",tag:"Đủ nội thất",t:3},
+{id:"s5",type:"item",title:"Tặng bàn học gấp gọn + ghế",price:0,area:"Gần cổng chính",desc:"Còn dùng tốt, em ra trường nên tặng lại cho bạn nào cần. Tự đến lấy.",phone:"0900000005",tag:"Bàn ghế",t:6},
+{id:"s6",type:"item",title:"Nồi cơm điện 1.2L, bếp từ mini",price:250,area:"Khu ký túc xá cũ",desc:"Dùng 1 năm, hoạt động bình thường, bán trọn bộ.",phone:"0900000006",tag:"Nhà bếp",t:5},
+{id:"s7",type:"item",title:"Giáo trình Tâm lí học, Giáo dục học",price:0,area:"Gần cổng chính",desc:"Bộ giáo trình năm 1–2, có ghi chú bút chì. Tặng bạn khóa dưới.",phone:"0900000007",tag:"Sách",t:4},
+{id:"s8",type:"item",title:"Quạt đứng + đèn học",price:120,area:"Hẻm sau trường",desc:"Quạt 3 tốc độ, đèn học LED còn mới. Có thể giao tận phòng.",phone:"0900000008",tag:"Điện gia dụng",t:3},
+{id:"s9",type:"item",title:"Tặng bộ đồ dùng thực hành giảng dạy",price:0,area:"Đường lớn gần trường",desc:"Bảng nhỏ, bút lông, thẻ chữ, giáo cụ trực quan dùng cho giờ tập giảng.",phone:"0900000009",tag:"Học tập",t:2}
+];
+var KEY="gtsp_posts",user=[];
+try{user=JSON.parse(localStorage.getItem(KEY)||"[]")}catch(e){user=[]}
+var tab="room";
+var $=function(i){return document.getElementById(i)};
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function all(){return user.concat(SAMPLE)}
+function fmt(p){return p===0?null:(p>=1000?(p/1000).toLocaleString("vi-VN",{maximumFractionDigits:1})+" triệu":p+" nghìn")}
+var PR={room:[["","Mọi mức giá"],["0-1200","Dưới 1,2 triệu"],["1200-2000","1,2 – 2 triệu"],["2000-99999","Trên 2 triệu"]],
+item:[["","Mọi mức giá"],["0-0","Tặng miễn phí"],["1-200","Dưới 200 nghìn"],["200-99999","Trên 200 nghìn"]]};
+function fillPrice(){$("price").innerHTML=PR[tab].map(function(o){return'<option value="'+o[0]+'">'+o[1]+'</option>'}).join("")}
+function fillArea(){
+var cur=$("area").value,set={};
+all().forEach(function(x){set[x.area]=1});
+$("area").innerHTML='<option value="">Mọi khu vực</option>'+Object.keys(set).sort().map(function(a){return'<option>'+esc(a)+'</option>'}).join("");
+$("area").value=cur;
+}
+function render(){
+var q=$("q").value.trim().toLowerCase(),a=$("area").value,p=$("price").value,s=$("sort").value;
+var r=all().filter(function(x){
+if(x.type!==tab)return false;
+if(a&&x.area!==a)return false;
+if(p){var b=p.split("-");if(x.price<+b[0]||x.price>+b[1])return false}
+if(q&&(x.title+" "+x.desc+" "+x.area+" "+x.tag).toLowerCase().indexOf(q)<0)return false;
+return true});
+r.sort(function(m,n){return s==="asc"?m.price-n.price:s==="desc"?n.price-m.price:n.t-m.t});
+$("empty").classList.toggle("hide",r.length>0);
+$("list").innerHTML=r.map(function(x){
+var f=fmt(x.price);
+var h='<article class="card">'+(f?'<div class="price">'+f+(x.type==="room"?" / tháng":"")+'</div>':'<div class="free">🎁 Tặng miễn phí</div>');
+h+='<h3>'+esc(x.title)+'</h3><div class="meta">📍 '+esc(x.area)+'</div><div class="tags"><span class="tag">'+esc(x.tag)+'</span></div>';
+h+='<div class="meta">'+esc(x.desc)+'</div>';
+h+='<div class="row"><a class="btn pri" href="tel:'+esc(x.phone)+'">📞 '+esc(x.phone)+'</a>';
+if(x.mine)h+='<button class="btn" data-del="'+x.id+'">Xóa tin</button>';
+h+='</div>'+(x.mine?"":'<div class="sample">Mẫu · dữ liệu minh họa</div>')+'</article>';
+return h}).join("");
+}
+function show(t){
+tab=t;
+[].forEach.call(document.querySelectorAll("#tabs button"),function(b){b.classList.toggle("on",b.dataset.t===t)});
+var br=t==="room"||t==="item";
+$("browse").classList.toggle("hide",!br);$("post").classList.toggle("hide",t!=="post");$("tips").classList.toggle("hide",t!=="tips");
+if(br){fillPrice();render()}
+}
+$("tabs").addEventListener("click",function(e){var t=e.target.dataset&&e.target.dataset.t;if(t)show(t)});
+["q","area","price","sort"].forEach(function(i){$(i).addEventListener("input",render)});
+$("list").addEventListener("click",function(e){
+var d=e.target.dataset&&e.target.dataset.del;
+if(!d)return;
+user=user.filter(function(x){return x.id!==d});save();fillArea();render();
+});
+function save(){try{localStorage.setItem(KEY,JSON.stringify(user))}catch(e){}}
+$("submit").addEventListener("click",function(){
+var title=$("f-title").value.trim(),area=$("f-area").value.trim(),phone=$("f-phone").value.trim(),price=parseInt($("f-price").value,10);
+var type=$("f-type").value,m=$("msg");
+if(!title||!area||!phone||isNaN(price)||price<0){m.textContent="Vui lòng điền đủ các mục có dấu *.";return}
+if(!/^[0-9+ .]{8,15}$/.test(phone)){m.textContent="Số điện thoại chưa hợp lệ.";return}
+user.unshift({id:"u"+Date.now(),type:type,title:title,price:price,area:area,desc:$("f-desc").value.trim(),phone:phone,tag:type==="room"?"Tin mới":(price===0?"Tặng":"Đồ cũ"),t:99,mine:true});
+save();
+["f-title","f-area","f-desc","f-phone"].forEach(function(i){$(i).value=""});
+$("f-price").value=0;m.textContent="";
+fillArea();show(type);
+});
+fillArea();show("room");
+})();
+</script>
+</body>
+</html>
